@@ -1,77 +1,61 @@
 package test;
 
-import com.microsoft.playwright.*;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.TestData;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static utils.TestData.BASE_URL;
+import static utils.TestData.*;
+
 
 public final class NavigationTest extends BaseTest {
-//    @Severity(SeverityLevel.NORMAL)
-//    @Story("")
-//    @Description("testBaseUrlLanding")
-//    @Test(description = "TC1369-01 - Running Domains tests under a Bronze subscription with partial test access. Valid.")
     @Test
-    public void testBaseUrlLanding() {
+    public void TestBaseUrlLanding() {
         getPage().navigate(BASE_URL);
 
-//        Allure.step("Bla bla");
-        assertThat(getPage()).hasURL(BASE_URL + TestData.HOME_END_POINT);
-
+        assertThat(getPage()).hasURL(BASE_URL + HOME_END_POINT);
     }
 
-//    @Severity(SeverityLevel.NORMAL)
-//    @Story("Tests Bronze")
-//    @Description("testWomenMenuNavigatesForWomenPage")
-//    @Test(description = "TC1371-01 - Running Chapters tests under a Bronze subscription with partial test access. Valid.",
-//            dependsOnMethods = {"testBaseUrlLanding"})
     @Test
-    public void testWomenMenuNavigatesForWomenPage() {
-
+    public void testWomenNavigatesToWomenPage() {
         if (getIsOnHomePage()) {
 
-            getPage().getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(TestData.WOMEN).setExact(true)).click();
+            getPage().getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(WOMEN).setExact(true)).click();
 
-//            Allure.step("Assertion: Bla bla");
-            assertThat(getPage()).hasURL(BASE_URL + TestData.WOMEN_END_POINT);
-        }else{
+            assertThat(getPage()).hasURL(BASE_URL + WOMEN_END_POINT);
+        } else {
             Assert.fail();
         }
+
     }
 
     @Test
-    public void testMenMenuNavigatesForMenPage() {
-
+    public void testMenNavigatesToMenPage() {
+        getPage().navigate(BASE_URL);
         getPage().getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(TestData.MEN).setExact(true)).click();
 
-        assertThat(getPage()).hasURL(BASE_URL + TestData.MEN_END_POINT);
+        assertThat(getPage()).hasURL(BASE_URL + MEN_END_POINT);
     }
 
     @Test
-    public void testAccessoriesMenuNavigatesForAccessoriesPage() {
+    public void testAccessoriesNavigatesToAccessoriesPage() {
+        getPage().navigate(BASE_URL);
 
         getPage().getByRole(AriaRole.NAVIGATION).getByRole(AriaRole.LINK, new Locator.GetByRoleOptions().setName(TestData.ACCESSORIES)).click();
 
-        assertThat(getPage()).hasURL(BASE_URL + TestData.ACCESSORIES_END_POINT);
+        assertThat(getPage()).hasURL(BASE_URL + ACCESSORIES_END_POINT);
     }
 
     @Test
-    public void testShoesMenuNavigatesForShoesPage() {
+    public void testAboutNavigatesToAboutPage() {
+        getPage().navigate(BASE_URL);
+        getPage().getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(ABOUT).setExact(true)).click();
 
-        getPage().getByRole(AriaRole.NAVIGATION).getByRole(AriaRole.LINK, new Locator.GetByRoleOptions().setName(TestData.SHOES)).click();
+        assertThat(getPage()).hasURL(BASE_URL + ABOUT_END_POINT);
 
-        assertThat(getPage()).hasURL(BASE_URL + TestData.SHOES_END_POINT);
-    }
-
-    @Test
-    public void testAboutMenuNavigatesForAboutPage() {
-
-        getPage().getByRole(AriaRole.NAVIGATION).getByRole(AriaRole.LINK, new Locator.GetByRoleOptions().setName(TestData.ABOUT)).click();
-
-        assertThat(getPage()).hasURL(BASE_URL + TestData.ABOUT_END_POINT);
     }
 }
+

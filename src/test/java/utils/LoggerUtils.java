@@ -2,6 +2,8 @@ package utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.testng.internal.BaseTestMethod;
+import test.BaseTest;
 
 public final class LoggerUtils {
     private static final String ERROR = "❌";
@@ -9,10 +11,14 @@ public final class LoggerUtils {
     private static final String WARNING = "⚠️";
     private static final String EXCEPTION = "❗️";
 
-    private static final Logger logger = LogManager.getLogger(LoggerUtils.class.getSimpleName());
+    private static final Logger logger = LogManager.getLogger(BaseTest.class.getSimpleName());
 
     public static void logInfo(String message) {
         logger.info(message);
+    }
+
+    public static void logInfoSuccess(String message) {
+        logger.info(SUCCESS + message);
     }
 
     public static void logError(String message) {

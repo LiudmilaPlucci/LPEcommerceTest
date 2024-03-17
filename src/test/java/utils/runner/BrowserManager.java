@@ -5,10 +5,16 @@ import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Playwright;
 import utils.LoggerUtils;
 
+import java.util.Map;
+
 public final class BrowserManager {
 
-    public static Browser createBrowser(Playwright playwright, String browserName, boolean isHeadless, int slowMo){
-        switch (browserName){
+    public static Browser createBrowser(Playwright playwright, Map<String, String> environment) {
+        String browserName = environment.get("browser");
+        boolean isHeadless = Boolean.parseBoolean(environment.get("isHeadless"));
+        int slowMo = Integer.parseInt(environment.get("slowMo"));
+
+        switch (browserName) {
             case "chromium" -> {
                 return playwright.chromium()
                         .launch(new BrowserType.LaunchOptions()
@@ -20,6 +26,7 @@ public final class BrowserManager {
                         .launch(new BrowserType.LaunchOptions()
                                 .setHeadless(isHeadless)
                                 .setSlowMo(slowMo));
+
             }
             case "webkit" -> {
                 return playwright.webkit()
@@ -28,7 +35,7 @@ public final class BrowserManager {
                                 .setSlowMo(slowMo));
             }
             default -> {
-                LoggerUtils.logError("ERROR: " + browserName + " is NOT match any options. Chromium() launched. ");
+//                LoggerUtils.logWarning("WARNING: " + browserName + " is NOT match any options. chromium() launched.");
                 return playwright.chromium()
                         .launch(new BrowserType.LaunchOptions()
                                 .setHeadless(true)
