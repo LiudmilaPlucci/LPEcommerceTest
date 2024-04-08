@@ -1,6 +1,7 @@
 package test;
 
 import com.microsoft.playwright.*;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -27,7 +28,7 @@ public abstract class BaseTest {
     @BeforeSuite
     void checkIfPlaywrightCreatedAndBrowserLaunched() {
         ReportUtils.logReportHeader();
-        ReportUtils.logLine();
+
 
         if (playwright != null) {
             LoggerUtils.logInfo("Playwright created.");
@@ -38,7 +39,7 @@ public abstract class BaseTest {
         }
 
         if (browser.isConnected()) {
-            LoggerUtils.logInfo("Browser " + browser.browserType().name() + " is connected.");
+            LoggerUtils.logInfo("Browser " + browser.browserType().name() + " is connected.\n\n");
         } else {
             LoggerUtils.logFatal("FATAL: Browser is NOT connected.");
             System.exit(1); // выходим из системы с кодом ошибки 1
@@ -47,7 +48,6 @@ public abstract class BaseTest {
 
     @BeforeMethod
     void createContextAndPage(Method method) {
-        ReportUtils.logLine();
         ReportUtils.logTestName(method);
 
         context = browser.newContext();
@@ -66,7 +66,8 @@ public abstract class BaseTest {
     }
 
     @AfterMethod
-    void closeContext() {
+    void closeContext(Method method, ITestResult result) {
+
         if (page != null) {
             page.close();
             LoggerUtils.logInfo("Page closed.");
@@ -76,7 +77,8 @@ public abstract class BaseTest {
             LoggerUtils.logInfo("Context closed.");
         }
 
-        ReportUtils.logLine();
+        ReportUtils.logTestResult(method, result);
+
     }
 
     @AfterSuite
@@ -90,7 +92,6 @@ public abstract class BaseTest {
             LoggerUtils.logInfo("Playwright closed.");
         }
 
-        ReportUtils.logLine();
     }
 
     private boolean isOnHomePage() {
