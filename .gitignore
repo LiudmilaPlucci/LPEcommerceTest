@@ -10,6 +10,7 @@ logs/
 .idea/compiler.xml
 .idea/libraries/
 .idea/*
+.idea/workspace.xml
 *.iws
 *.iml
 *.ipr
@@ -22,6 +23,8 @@ logs/
 .settings
 .springBeans
 .sts4-cache
+
+
 
 ### NetBeans ###
 /nbproject/private/
@@ -38,3 +41,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+.allure/
+

@@ -12,7 +12,7 @@ public class ReportUtils {
     private static String LONG_TABS = "\t".repeat(10);
     private static String SHORT_TABS = "\t".repeat(8);
 
-    public static String getLine() {
+    public static String printLine() {
         return LINE;
     }
 

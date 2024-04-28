@@ -10,6 +10,7 @@ public final class LoggerUtils {
     public static final String WARNING = "⚠️";
     private static final String EXCEPTION = "❗️";
 
+
     private static final Logger logger = LogManager.getLogger(BaseTest.class.getSimpleName());
 
     public static void logInfo(String message) {

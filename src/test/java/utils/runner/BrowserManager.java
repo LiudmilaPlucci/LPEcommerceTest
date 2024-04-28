@@ -3,7 +3,6 @@ package utils.runner;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Playwright;
-import utils.LoggerUtils;
 
 import java.util.Map;
 
@@ -40,6 +39,40 @@ public final class BrowserManager {
                         .launch(new BrowserType.LaunchOptions()
                                 .setHeadless(true)
                                 .setSlowMo(0));
+            }
+        }
+    }
+
+    public static Browser createBrowser(Playwright playwright, String browser, String isHeadlessString, String slowMoString) {
+        boolean isHeadless;
+        int slowMo;
+
+        if (isHeadlessString != null && !isHeadlessString.isEmpty() && slowMoString != null && !slowMoString.isEmpty()) {
+            isHeadless = Boolean.parseBoolean(isHeadlessString);
+            slowMo = Integer.parseInt(slowMoString);
+        } else {
+            isHeadless = true;
+            slowMo = 0;
+        }
+
+        switch (browser) {
+            case "firefox" -> {
+                return playwright.firefox()
+                        .launch(new BrowserType.LaunchOptions()
+                                .setHeadless(isHeadless)
+                                .setSlowMo(slowMo));
+            }
+            case "webkit" -> {
+                return playwright.webkit()
+                        .launch(new BrowserType.LaunchOptions()
+                                .setHeadless(isHeadless)
+                                .setSlowMo(slowMo));
+            }
+            default -> {
+                return playwright.chromium()
+                        .launch(new BrowserType.LaunchOptions()
+                                .setHeadless(isHeadless)
+                                .setSlowMo(slowMo));
             }
         }
     }
